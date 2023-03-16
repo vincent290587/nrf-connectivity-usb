@@ -73,6 +73,10 @@
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
     NRF_LOG_ERROR("Error %u in %s:%d", error_code, p_file_name, line_num);
+    NRF_LOG_FLUSH();
+#ifdef DEBUG_NRF
+    NRF_BREAKPOINT_COND;
+#endif
 }
 
 /**@brief Function for error handling, which is called when an error has occurred.
@@ -83,6 +87,9 @@ void app_error_handler_bare(ret_code_t error_code) {
 
     NRF_LOG_ERROR("Error %u (0x%X)", error_code, error_code);
     NRF_LOG_FLUSH();
+#ifdef DEBUG_NRF
+    NRF_BREAKPOINT_COND;
+#endif
 }
 
 /**
@@ -298,13 +305,12 @@ int main(void)
 
     bsp_board_init(BSP_INIT_LEDS);
 
-    while (1) {
+    do {
         NRFX_DELAY_US(500000);
         bsp_board_led_invert(0);
-        NRF_LOG_INFO("BLE connectivity started");
 
         NRF_LOG_PROCESS();
-    }
+    } while (0);
 
 #ifdef SER_CONNECTIVITY
 
