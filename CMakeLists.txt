@@ -10,10 +10,10 @@ set(CMAKE_COLOR_MAKEFILE          OFF)
 
 set(USE_SOFTDEVICE                ON)
 
-set(USE_CONNECTIVITY              OFF)
+set(USE_CONNECTIVITY              ON)
 
 # c:/Nordic/nRF5_SDK_17.1.0_ddde560
-set(SDK_ROOT    "c:/Nordic/nRF5_SDK_16.0.0_98a08e2")
+set(SDK_ROOT    "c:/Nordic/nRF5_SDK_17.1.0_ddde560")
 set(PROJ_DIR    "${CMAKE_CURRENT_SOURCE_DIR}")
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
