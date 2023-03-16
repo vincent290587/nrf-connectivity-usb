@@ -125,9 +125,8 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
         {
             error_info_t * p_info = (error_info_t *)info;
             NRF_LOG_ERROR(
-                    "ERROR 0x%X [%s] at %s:%u",
+                    "ERROR 0x%X at %s:%u",
                     (unsigned int)p_info->err_code,
-                    nrf_strerror_get(p_info->err_code),
                     p_info->p_file_name,
                     (uint16_t)p_info->line_num);
             return;
@@ -174,6 +173,8 @@ static volatile bool m_usb_started;
 
 void assert_nrf_callback(uint16_t line_num, const uint8_t * file_name)
 {
+    bsp_board_led_on(1);
+
     assert_info_t assert_info =
             {
                     .line_num    = line_num,
@@ -182,8 +183,8 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * file_name)
     app_error_fault_handler(NRF_FAULT_ID_SDK_ASSERT, 0, (uint32_t)(&assert_info));
 
 #ifndef DEBUG_NRF_USER
-    LOG_WARNING("System reset");
-	LOG_FLUSH();
+    NRF_LOG_WARNING("System reset");
+    NRF_LOG_FLUSH();
 	NVIC_SystemReset();
 #else
     NRF_BREAKPOINT_COND;
