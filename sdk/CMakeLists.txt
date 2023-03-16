@@ -317,7 +317,7 @@ set(SDK_SRCS
 include_directories(${SDK_INCLUDES})
 
 set(TMR_SRCS
-        ${SDK_ROOT}/components/libraries/timer/app_timer.c
+        ${SDK_ROOT}/components/libraries/timer/app_timer2.c
         )
 
 include_directories(${SDK_INCLUDES})

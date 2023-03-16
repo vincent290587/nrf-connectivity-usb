@@ -54,8 +54,6 @@
 #include "app_error.h"
 #include "app_scheduler.h"
 #include "nrf_sdh.h"
-#include "ser_hal_transport.h"
-#include "ser_conn_handlers.h"
 #include "boards.h"
 #include "nrf_drv_clock.h"
 
@@ -63,39 +61,14 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 #include "app_timer.h"
+
+#ifdef SER_CONNECTIVITY
+#include "ser_hal_transport.h"
+#include "ser_conn_handlers.h"
 #include "ser_phy_debug_comm.h"
-
-#if defined(APP_USBD_ENABLED) && APP_USBD_ENABLED
-#include "app_usbd_serial_num.h"
-#ifdef BOARD_PCA10059
-#include "nrf_dfu_trigger_usb.h"
 #endif
-#include "app_usbd.h"
 
-static volatile bool m_usb_started;
 
-void assert_nrf_callback(uint16_t line_num, const uint8_t * file_name)
-{
-    assert_info_t assert_info =
-            {
-                    .line_num    = line_num,
-                    .p_file_name = file_name,
-            };
-    app_error_fault_handler(NRF_FAULT_ID_SDK_ASSERT, 0, (uint32_t)(&assert_info));
-
-#ifndef DEBUG_NRF_USER
-    LOG_WARNING("System reset");
-	LOG_FLUSH();
-	NVIC_SystemReset();
-#else
-    NRF_BREAKPOINT_COND;
-
-    bool loop = true;
-    while (loop) ;
-#endif // DEBUG
-
-    UNUSED_VARIABLE(assert_info);
-}
 
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
@@ -136,20 +109,20 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
         {
             assert_info_t * p_info = (assert_info_t *)info;
             NRF_LOG_ERROR(
-                     "ASSERTION FAILED at %s:%u",
-                     p_info->p_file_name,
-                     p_info->line_num);
+                    "ASSERTION FAILED at %s:%u",
+                    p_info->p_file_name,
+                    p_info->line_num);
             break;
         }
         case NRF_FAULT_ID_SDK_ERROR:
         {
             error_info_t * p_info = (error_info_t *)info;
             NRF_LOG_ERROR(
-                     "ERROR 0x%X [%s] at %s:%u",
-                     (unsigned int)p_info->err_code,
-                     nrf_strerror_get(p_info->err_code),
-                     p_info->p_file_name,
-                     (uint16_t)p_info->line_num);
+                    "ERROR 0x%X [%s] at %s:%u",
+                    (unsigned int)p_info->err_code,
+                    nrf_strerror_get(p_info->err_code),
+                    p_info->p_file_name,
+                    (uint16_t)p_info->line_num);
             return;
             break;
         }
@@ -181,6 +154,38 @@ void HardFault_process(HardFault_stack_t * p_stack)
 #endif
     // Restart the system by default
     NVIC_SystemReset();
+}
+
+#if defined(APP_USBD_ENABLED) && APP_USBD_ENABLED
+#include "app_usbd_serial_num.h"
+#ifdef BOARD_PCA10059
+#include "nrf_dfu_trigger_usb.h"
+#endif
+#include "app_usbd.h"
+
+static volatile bool m_usb_started;
+
+void assert_nrf_callback(uint16_t line_num, const uint8_t * file_name)
+{
+    assert_info_t assert_info =
+            {
+                    .line_num    = line_num,
+                    .p_file_name = file_name,
+            };
+    app_error_fault_handler(NRF_FAULT_ID_SDK_ASSERT, 0, (uint32_t)(&assert_info));
+
+#ifndef DEBUG_NRF_USER
+    LOG_WARNING("System reset");
+	LOG_FLUSH();
+	NVIC_SystemReset();
+#else
+    NRF_BREAKPOINT_COND;
+
+    bool loop = true;
+    while (loop) ;
+#endif // DEBUG
+
+    UNUSED_VARIABLE(assert_info);
 }
 
 
@@ -250,7 +255,7 @@ static void usbd_enable(void)
 
 static void on_idle(void)
 {
-
+    bsp_board_led_invert(0);
     if (!NRF_LOG_PROCESS())
     {
       // Wait for an event.
@@ -284,13 +289,24 @@ int main(void)
 {
     uint32_t err_code = NRF_SUCCESS;
 
-    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
     NRF_LOG_INFO("BLE connectivity started");
 
     bsp_board_init(BSP_INIT_LEDS);
+
+    while (1) {
+        NRFX_DELAY_US(500000);
+        bsp_board_led_invert(0);
+        NRF_LOG_INFO("BLE connectivity started");
+
+        NRF_LOG_PROCESS();
+    }
+
+#ifdef SER_CONNECTIVITY
 
 #if (defined(SER_PHY_HCI_DEBUG_ENABLE) || defined(SER_PHY_DEBUG_APP_ENABLE))
     debug_init(NULL);
@@ -362,5 +378,13 @@ int main(void)
 
         on_idle();
     }
+
+#else
+
+    while (1) {
+        on_idle();
+    }
+
+#endif
 }
 /** @} */
