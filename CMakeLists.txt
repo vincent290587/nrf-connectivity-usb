@@ -4,6 +4,8 @@ project(Connectivity LANGUAGES ASM C CXX)
 
 set(APP_VERSION 1)
 
+set(CMAKE_INSTALL_BINDIR          ${CMAKE_SOURCE_DIR}/bin)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_VERBOSE_MAKEFILE        OFF)
 set(CMAKE_COLOR_MAKEFILE          OFF)
@@ -99,6 +101,18 @@ add_executable(${PROJECT_NAME}.elf ${SRCS})
 
 target_link_libraries(${PROJECT_NAME}.elf nosys)
 target_link_libraries(${PROJECT_NAME}.elf -Wl,--whole-archive SDK_LIBS -Wl,--no-whole-archive)
+
+install(TARGETS ${PROJECT_NAME}.elf
+        DESTINATION ${CMAKE_INSTALL_BINDIR}
+        )
+
+install(FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.bin
+        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.hex
+#        CONFIGURATIONS Release
+        DESTINATION ${CMAKE_INSTALL_BINDIR}
+        )
+
 
 add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
         COMMAND ${TOOLCHAIN}-objcopy ARGS -O binary ${PROJECT_NAME}.elf ${PROJECT_NAME}.bin)
