@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.7.2)
 project(SDK_LIBS LANGUAGES C ASM)
 
 set(SDK_INCLUDES
+        ${CMAKE_CURRENT_SOURCE_DIR}/
         ${SDK_ROOT}/components/toolchain/cmsis/dsp/Include
         ${SDK_ROOT}/components/softdevice/common
         ${SDK_ROOT}/components
@@ -178,7 +179,7 @@ if(USE_CONNECTIVITY)
     aux_source_directory(${SDK_ROOT}/components/serialization/common/transport BLE_SRCS)
 
     list(APPEND BLE_SRCS
-            ${SDK_ROOT}/components/serialization/common/transport/ser_phy/ser_phy_hci.c
+            ${CMAKE_CURRENT_SOURCE_DIR}/ser_phy_hci.c
             ${SDK_ROOT}/components/serialization/common/transport/ser_phy/ser_phy_hci_slip_cdc.c
             ${SDK_ROOT}/components/serialization/connectivity/codecs/common/conn_mw.c
             ${SDK_ROOT}/components/serialization/connectivity/codecs/common/conn_mw_nrf_soc.c

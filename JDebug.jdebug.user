@@ -1,0 +1,28 @@
+
+Breakpoint=C:/Users/vgol/Documents/01_Firmware/xx_BlackOps/Connectivity/main.c:176:1, State=BP_STATE_DISABLED
+OpenDocument="ser_phy_hci.c", FilePath="C:/Nordic/nRF5_SDK_17.1.0_ddde560/components/serialization/common/transport/ser_phy/ser_phy_hci.c", Line=1669
+OpenDocument="ser_hal_transport.c", FilePath="C:/Nordic/nRF5_SDK_17.1.0_ddde560/components/serialization/common/transport/ser_hal_transport.c", Line=313
+OpenDocument="main.c", FilePath="C:/Users/vgol/Documents/01_Firmware/xx_BlackOps/Connectivity/main.c", Line=256
+OpenDocument="nrf_atfifo.c", FilePath="C:/Nordic/nRF5_SDK_17.1.0_ddde560/components/libraries/atomic_fifo/nrf_atfifo.c", Line=108
+OpenDocument="nrf_atfifo_internal.h", FilePath="C:/Nordic/nRF5_SDK_17.1.0_ddde560/components/libraries/atomic_fifo/nrf_atfifo_internal.h", Line=475
+OpenDocument="app_usbd.c", FilePath="C:/Nordic/nRF5_SDK_17.1.0_ddde560/components/libraries/usbd/app_usbd.c", Line=1040
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Call Stack", DockArea=RIGHT, x=0, y=1, w=724, h=450, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=LEFT, x=0, y=1, w=536, h=989, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=3, w=724, h=132, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=0, w=536, h=365, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
+OpenWindow="Memory 1", DockArea=BOTTOM, x=1, y=0, w=811, h=287, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x2000D0A4
+OpenWindow="Global Data", DockArea=LEFT, x=0, y=1, w=536, h=989, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Local Data", DockArea=RIGHT, x=0, y=2, w=724, h=621, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data 1", DockArea=RIGHT, x=0, y=0, w=724, h=168, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=2388, h=287, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[163;150;259]
+TableHeader="Vector Catches", SortCol="None", SortOrder="ASCENDING", VisibleCols=["";"Vector Catch";"Description"], ColWidths=[50;300;500]
+TableHeader="Break & Tracepoints", SortCol="Location", SortOrder="DESCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[58;61;267;150]
+TableHeader="Local Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[185;180;77;54;260;100]
+TableHeader="Call Stack", SortCol="Function", SortOrder="ASCENDING", VisibleCols=["Function";"Stack Frame";"Source";"PC";"Return Address";"Stack Used"], ColWidths=[224;150;161;86;190;100]
+TableHeader="Power Sampling", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location"], ColWidths=[127;216;381]
+TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="Global Data", SortCol="Location", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[222;160;100;100;242;100]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;1056]
